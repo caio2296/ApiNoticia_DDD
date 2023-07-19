@@ -54,7 +54,7 @@ namespace WebApi.Controllers
                     .AddClaim("idUsuario", idUsuario)
                     .AddExpiry(5)
                     .Builder();
-                return Ok(token);
+                return Ok(token.value);
             }
             else
             {

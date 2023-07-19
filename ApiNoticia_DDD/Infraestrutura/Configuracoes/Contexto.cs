@@ -19,15 +19,16 @@ namespace Infraestrutura.Configuracoes
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer(ObterStringConexao());
-            //    base.OnConfiguring(optionsBuilder);
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(ObterStringConexao());
+                base.OnConfiguring(optionsBuilder);
+            }
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ApplicationUser>().ToTable("AspNetUsers").HasKey(T => T.Id);
+            builder.Entity<Noticia>().ToTable("Noticias").HasKey(t=> t.Id);
             base.OnModelCreating(builder);
         }
         private string ObterStringConexao()
