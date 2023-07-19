@@ -40,11 +40,11 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddCors();
-            //services.AddDbContext<Contexto>(options=>
-            //options.UseSqlServer(
-            //     Configuration.GetConnectionString("Default")));
-            services.AddDbContext<Contexto>(context => context.UseInMemoryDatabase("NoticiaDb"));
+            services.AddCors();
+            services.AddDbContext<Contexto>(options =>
+            options.UseSqlServer(
+                 Configuration.GetConnectionString("Default")));
+            //services.AddDbContext<Contexto>(context => context.UseInMemoryDatabase("NoticiaDb"));
 
             services.AddDefaultIdentity<ApplicationUser>(options=>
             options.SignIn.RequireConfirmedAccount = false)
@@ -132,10 +132,15 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            //var urlCliente1 = "https://dominiodocliente.com.br";
+            var urlCliente1 = "http://localhost:4200";
             //var urlCliente2 = "https://dominiodocliente2.com.br";
 
-            //app.UseCors(b => b.WithOrigins(urlCliente1, urlCliente2));
+            //app.UseCors(b => b.WithOrigins(urlCliente1));
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins(urlCliente1));
 
             if (env.IsDevelopment())
             {
